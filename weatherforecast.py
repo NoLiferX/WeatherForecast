@@ -1,18 +1,20 @@
 from bs4 import BeautifulSoup
 import requests
+from win10toast import ToastNotifier as tn
 
 # Initialization for http request
-athens = 'https://weather.com/el-GR/weather/today/l/dd331ef7b39406c08b339ad503f0d9475cb742124d8753ae20750e72051e91c1'
-thess = 'https://weather.com/el-GR/weather/today/l/4f7940e96197643c80e3c64a7d0ccb4fb6eff7bced4158152da995da08f40053'
-patra = 'https://weather.com/el-GR/weather/today/l/a8c1d5fa8f854f3e5c626109483f1542b6eb8f29924330ccc44ffc07e3050bd7'
-gianena = 'https://weather.com/el-GR/weather/today/l/7a5351e10b7d52f667e9f0a0b71140bd176ef6cd09edf748f7e28a607baeb3e8'
-hrakleio = 'https://weather.com/el-GR/weather/today/l/4f3800462bc69d7213931d2a3ed41b2ea6f1e8ce1925bfdce551292d2d6fdb44'
+tokyo = 'https://weather.com/en-GB/weather/today/l/4ba28384e2da53b2861f5b5c70b7332e4ba1dc83e75b948e6fbd2aaceeeceae3'
+osaka = 'https://weather.com/en-GB/weather/today/l/49fbadf46d6a950673c54e4427ce9371b45e617247efda03fed276143dfc65ba'
+kyoto = 'https://weather.com/en-GB/weather/today/l/db404793036d55e5d1404643882f997027bf2093c64b4127ad7a969054ed393c'
+nagoya = 'https://weather.com/en-GB/weather/today/l/096fc9d3995db272f638412ce2bc0de4104bffbf25224e20178a67973dd35845'
+kobe = 'https://weather.com/en-GB/weather/today/l/b805f3d0d33367259525091ec49cc64f614f4c88b10af0c29abf0927e872ab66'
 
+# Initialization others variables
 high_temp = -99
 temperatures = []
 i =0
 high_temp_printed = False
-cities = [athens, thess, patra, gianena, hrakleio]
+cities = [tokyo, osaka, kyoto, nagoya, kobe]
 
 for city in cities:
     # Do http requests
@@ -22,10 +24,11 @@ for city in cities:
 
     # Scraping
     city = soup.find('h1', class_= 'CurrentConditions--location--kyTeL').text
+    index = city.find(",")
+    city = city[:index]
     temperature = soup.find('span', class_='CurrentConditions--tempValue--3a50n').text
-    rain = soup.find('div', class_='CurrentConditions--precipValue--3nxCj').text
-
     temp_int = int(temperature[0:2])
+    rain = soup.find('div', class_='CurrentConditions--precipValue--3nxCj').text
 
     # Find the city with highest temperature 
     if temp_int > high_temp:
