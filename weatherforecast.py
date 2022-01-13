@@ -32,7 +32,7 @@ for city in cities:
     temperature = soup.find('span', class_='CurrentConditions--tempValue--3a50n').text
     temp_int = int(temperature[0:len(temperature)-1])
     try:
-        rain = soup.find('div', class_='CurrentConditions--precipValue--3nxCj').text
+        rain = soup.find('a', class_='CurrentConditions--overlayBox--2unNK').text
     except AttributeError as ae:
         # print(ae)
         rain = soup.find('div', class_='CurrentConditions--phraseValue--2Z18W').text
